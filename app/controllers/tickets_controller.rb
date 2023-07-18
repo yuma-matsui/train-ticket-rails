@@ -26,11 +26,10 @@ class TicketsController < ApplicationController
   end
 
   def update
-    exited_gate = Gate.find(ticket_update_params[:exited_gate_id])
-    if exited_gate.exit?(@ticket) && @ticket.update(ticket_update_params)
+    if @ticket.update(ticket_update_params)
       redirect_to root_path, notice: '降車しました。😄'
     else
-      redirect_to [:edit, @ticket], notice: '降車駅 では降車できません。'
+      render :edit
     end
   end
 
