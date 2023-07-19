@@ -48,11 +48,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
   end
 
-  def used_ticket?
-    Ticket.find(params[:id]).exited_gate_id.present?
-  end
-
   def deny_used_ticket
-    redirect_to root_path, notice: '降車済みの切符です。' if used_ticket?
+    redirect_to root_path, notice: '降車済みの切符です。' if @ticket.used?
   end
 end

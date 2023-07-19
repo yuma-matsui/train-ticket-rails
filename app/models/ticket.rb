@@ -5,11 +5,16 @@ class Ticket < ApplicationRecord
   validates :entered_gate_id, presence: true
   validate :check_distance
 
+  def used?
+    exited_gate_id.present?
+  end
+
   private
 
   def check_distance
-    if exited_gate_id.present? && !(exited_gate&.exit?(self))
-      errors.add(:exited_gate_id, '降車駅 では降車できません。')
+    if exited_gate_id.present? && !exited_gate&.exit?(self)
+      errors.add(:exited_gate_id, "#{Ticket.human_attribute_name(:exited_gate)} では降車できません。")
     end
   end
+
 end
