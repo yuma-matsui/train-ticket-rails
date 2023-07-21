@@ -10,6 +10,6 @@ class Gate < ApplicationRecord
   # TODO
   def exit?(ticket)
     distance = (station_number - ticket.entered_gate.station_number).abs
-    distance == 0 ? false : (ticket.fare >= FARES[distance - 1])
+    distance != 0 && (ticket.fare >= FARES[distance - 1])
   end
 end
